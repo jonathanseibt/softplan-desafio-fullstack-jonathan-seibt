@@ -39,7 +39,7 @@ docker run -d -v "/$(pwd)/backend:/home/spring-boot-softplan-desafio-fullstack-j
 3. ### Front-end React
 
 ```
-docker build -t react-image-softplan-desafio-fullstack-jonathan-seibt -f frontend/Dockerfile .
+cd frontend && docker build -t react-image-softplan-desafio-fullstack-jonathan-seibt . && cd ..
 ```
 
 ```
