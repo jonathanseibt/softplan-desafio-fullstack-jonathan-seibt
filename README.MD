@@ -24,4 +24,16 @@ docker exec -i mysql-container-softplan-desafio-fullstack-jonathan-seibt mysql -
 
 2. ### Back-end Sprint Boot
 
+```
+cd backend && mvnw clean package && cd ..
+```
+
+```
+cd backend && docker build -t spring-boot-image-softplan-desafio-fullstack-jonathan-seibt . && cd ..
+```
+
+```
+docker run -d -v "/$(pwd)/backend:/home/spring-boot-softplan-desafio-fullstack-jonathan-seibt" -p 8080:8080 --link mysql-container-softplan-desafio-fullstack-jonathan-seibt --rm --name spring-boot-container-softplan-desafio-fullstack-jonathan-seibt spring-boot-image-softplan-desafio-fullstack-jonathan-seibt
+```
+
 3. ### Front-end React
