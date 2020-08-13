@@ -7,5 +7,18 @@
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true
+  "files.trimFinalNewlines": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "java.semanticHighlighting.enabled": true,
+  "java.refactor.renameFromFileExplorer": "autoApply",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
