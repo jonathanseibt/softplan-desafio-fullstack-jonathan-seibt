@@ -30,6 +30,7 @@
   "rules": {
     "linebreak-style": "off",
     "react/jsx-props-no-spreading": 0,
+    "max-len": ["error", { "code": 160, "ignoreUrls": true }],
     "prettier/prettier": [
       "error",
       {
