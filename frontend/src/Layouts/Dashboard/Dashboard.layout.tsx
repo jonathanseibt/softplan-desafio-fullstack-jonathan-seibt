@@ -32,7 +32,12 @@ const Layout: React.FC = observer((_props) => {
     <div className={styles.root}>
       <Topbar />
       <Sidebar />
-      <Content>{_props.children}</Content>
+
+      <main className={styles.content}>
+        <div className={styles.appBarSpacer} />
+
+        {_props.children}
+      </main>
     </div>
   );
 });
@@ -43,8 +48,11 @@ const Topbar: React.FC = observer(() => {
   const onClickLogout = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    LocalStore.isAuthenticated = false;
-    LocalStore.user = null;
+    LocalStore.clientSideLogout();
+  };
+
+  const getRoleDescription = (role: number | undefined) => {
+    return role ? (role === 1 ? "Administrador" : role === 2 ? "Triador" : "Finalizador") : "";
   };
 
   return (
@@ -64,9 +72,11 @@ const Topbar: React.FC = observer(() => {
           Dashboard
         </Typography>
 
-        <Box marginX={2}>
-          <Chip avatar={<Avatar alt={LocalStore.user?.name} />} label={LocalStore.user?.name} />
-        </Box>
+        <Tooltip title={getRoleDescription(LocalStore.userRole)}>
+          <Box marginX={2}>
+            <Chip avatar={<Avatar />} label={LocalStore.userName} />
+          </Box>
+        </Tooltip>
 
         <IconButton color="inherit" onClick={onClickLogout}>
           <Tooltip title="Sair">
@@ -101,18 +111,6 @@ const Sidebar: React.FC = observer(() => {
         </ListItem>
       </List>
     </Drawer>
-  );
-});
-
-const Content: React.FC = observer((_props) => {
-  const styles = useStyles();
-
-  return (
-    <main className={styles.content}>
-      <div className={styles.appBarSpacer} />
-
-      {_props.children}
-    </main>
   );
 });
 

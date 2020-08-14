@@ -64,8 +64,9 @@ export default makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    height: "100vh",
+    height: "calc(100vh - 64px)",
     overflow: "auto",
+    marginTop: "64px",
   },
   menuItem: {
     paddingLeft: "24px",
