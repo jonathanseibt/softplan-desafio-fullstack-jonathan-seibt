@@ -6,6 +6,7 @@ import AuthenticationLayout from "./Layouts/Authentication/Authentication.layout
 import DashboardView from "./Views/Dashboard/Dashboard.view";
 import LoginView from "./Views/Login/Login.view";
 import UsuariosView from "./Views/Usuarios/Usuarios.view";
+import ProcessosView from "./Views/Processos/Processos.view";
 import LocalStore from "./Local.store";
 
 const Router: React.FC = observer(() => {
@@ -41,6 +42,16 @@ const Router: React.FC = observer(() => {
             {LocalStore.isAuthenticated ? (
               <DashboardLayout>
                 <UsuariosView />
+              </DashboardLayout>
+            ) : (
+              <Redirect to="/" />
+            )}
+          </Route>
+
+          <Route path="/processos">
+            {LocalStore.isAuthenticated ? (
+              <DashboardLayout>
+                <ProcessosView />
               </DashboardLayout>
             ) : (
               <Redirect to="/" />

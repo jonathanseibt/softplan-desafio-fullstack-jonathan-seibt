@@ -22,6 +22,7 @@ import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOut
 import ChevronLeftOutlinedIcon from "@material-ui/icons/ChevronLeftOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
+import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import Store from "./Dashboard.store";
 import useStyles from "./Dashboard.styles";
 import LocalStore from "../../Local.store";
@@ -126,6 +127,16 @@ const Sidebar: React.FC = observer(() => {
             </ListItemIcon>
 
             <ListItemText primary="Usuários" />
+          </ListItem>
+        </Link>
+
+        <Link to="/processos">
+          <ListItem button className={styles.menuItem}>
+            <ListItemIcon>
+              <DescriptionOutlinedIcon />
+            </ListItemIcon>
+
+            <ListItemText primary="Processos" />
           </ListItem>
         </Link>
       </List>
