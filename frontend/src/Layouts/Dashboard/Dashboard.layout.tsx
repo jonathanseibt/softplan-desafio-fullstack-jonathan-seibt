@@ -35,11 +35,7 @@ const Layout: React.FC = observer((_props) => {
       <Topbar />
       <Sidebar />
 
-      <main className={styles.content}>
-        <div className={styles.appBarSpacer} />
-
-        {_props.children}
-      </main>
+      <main className={styles.content}>{_props.children}</main>
     </div>
   );
 });
