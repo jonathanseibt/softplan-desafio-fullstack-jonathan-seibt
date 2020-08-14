@@ -1,28 +1,13 @@
 import React from "react";
 import { observer } from "mobx-react";
-import {
-  AppBar,
-  IconButton,
-  Typography,
-  Toolbar,
-  Drawer,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Tooltip,
-  Chip,
-  Avatar,
-  Box,
-} from "@material-ui/core";
+import { AppBar, IconButton, Typography, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, Tooltip, Chip, Avatar } from "@material-ui/core";
 import clsx from "clsx";
 import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
-import Store from "./Dashboard.store";
-import useStyles from "./Dashboard.styles";
 import ChevronLeftOutlinedIcon from "@material-ui/icons/ChevronLeftOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import Store from "./Dashboard.store";
+import useStyles from "./Dashboard.styles";
 import LocalStore from "../../Local.store";
 
 const Layout: React.FC = observer((_props) => {
@@ -51,8 +36,17 @@ const Topbar: React.FC = observer(() => {
     LocalStore.clientSideLogout();
   };
 
-  const getRoleDescription = (role: number | undefined) => {
-    return role ? (role === 1 ? "Administrador" : role === 2 ? "Triador" : "Finalizador") : "";
+  const getRoleDescription = (role: number) => {
+    switch (role) {
+      case 1:
+        return "Administrador";
+      case 2:
+        return "Triador";
+      case 3:
+        return "Finalizador";
+      default:
+        return "";
+    }
   };
 
   return (

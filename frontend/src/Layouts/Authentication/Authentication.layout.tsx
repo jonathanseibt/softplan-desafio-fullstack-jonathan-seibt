@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Container, Avatar, Box, Typography } from "@material-ui/core";
+import { Container, Avatar, Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./Authentication.styles";
 

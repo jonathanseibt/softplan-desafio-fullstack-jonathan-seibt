@@ -5,8 +5,11 @@ class Store {
   @persist @observable isAuthenticated = false;
 
   @persist @observable userId = 0;
+
   @persist @observable userName = "";
+
   @persist @observable userEmail = "";
+
   @persist @observable userRole = 0;
 
   clientSideLogin = (id: number, name: string, email: string, role: number) => {
