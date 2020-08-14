@@ -16,6 +16,10 @@ const View: React.FC = observer(() => {
       <Typography component="h3" variant="h2">
         {LocalStore.userName}
       </Typography>
+
+      <Typography component="h4" variant="body2" className={styles.subtitle}>
+        Navegue pelo menu lateral
+      </Typography>
     </div>
   );
 });
