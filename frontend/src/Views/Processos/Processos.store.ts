@@ -12,17 +12,24 @@ class Store {
   @observable inputDescription = "";
   @observable inputUser = "";
   @observable inputRating = "";
+  @observable listaUsuariosFinalizadores: any[] = [];
 
   @action
   load = async () => {
     try {
       this.data = [];
 
-      const url = `${Constants.URL_API}${LocalStore.user.role === 2 ? "/process" : `/process/FindAllByUser/${LocalStore.user.id}`}`;
+      const url = `${Constants.URL_API}${LocalStore.user.role === Constants.ROLE.TRIADOR ? "/process" : `/process/FindAllByUser/${LocalStore.user.id}`}`;
       const result = await axios.get(url);
-      for (const row of result.data) row.user = row.user.id;
+
+      for (const row of result.data) {
+        row.userId = row.user.id;
+        row.userName = row.user.name;
+      }
 
       this.data = result.data;
+
+      this.listaUsuariosFinalizadores = (await axios.get(`${Constants.URL_API}/user/FindAllByRole/${Constants.ROLE.FINALIZADOR}`)).data;
     } catch (e) {
       window.alert("Não foi possível carregar os processos!");
       console.error(e);
@@ -52,7 +59,7 @@ class Store {
 
   @action
   validateForm = () => {
-    if (LocalStore.user.role === 2) {
+    if (LocalStore.user.role === Constants.ROLE.TRIADOR) {
       if (!this.inputTitle || !this.inputDescription || !this.inputUser) {
         window.alert("Preencha todos os campos!");
 

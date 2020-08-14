@@ -95,18 +95,20 @@ const List: React.FC = observer(() => {
               <TableCell align="left">Título</TableCell>
               <TableCell align="left">Descrição</TableCell>
               {LocalStore.user.role === Constants.ROLE.TRIADOR && <TableCell align="left">Finalizador</TableCell>}
+              {LocalStore.user.role === Constants.ROLE.FINALIZADOR && <TableCell align="left">Situação</TableCell>}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {store.data.map((row) => (
-              <TableRow key={row.name} onClick={() => store.onClickRow(row)} style={{ cursor: "pointer" }}>
+            {store.data.map((row, index: number) => (
+              <TableRow key={index} onClick={() => store.onClickRow(row)} style={{ cursor: "pointer" }}>
                 <TableCell width="80px" align="right">
                   {row.id}
                 </TableCell>
                 <TableCell align="left">{row.title}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
-                {LocalStore.user.role === Constants.ROLE.TRIADOR && <TableCell align="left">{row.user}</TableCell>}
+                {LocalStore.user.role === Constants.ROLE.TRIADOR && <TableCell align="left">{row.userName}</TableCell>}
+                {LocalStore.user.role === Constants.ROLE.FINALIZADOR && <TableCell align="left">{row.rating ? "OK" : "Necessita parecer!"}</TableCell>}
               </TableRow>
             ))}
           </TableBody>
@@ -144,7 +146,7 @@ const Form: React.FC = observer(() => {
               required
               fullWidth
               label="Titulo"
-              autoFocus
+              autoFocus={LocalStore.user.role === Constants.ROLE.TRIADOR}
               value={store.inputTitle}
               onChange={(event) => store.onChangeInputTitle(event.target.value)}
               disabled={LocalStore.user.role === Constants.ROLE.FINALIZADOR}
@@ -198,6 +200,7 @@ const Form: React.FC = observer(() => {
                 required
                 fullWidth
                 label="Parecer"
+                autoFocus={LocalStore.user.role === Constants.ROLE.FINALIZADOR}
                 value={store.inputRating}
                 onChange={(event) => store.onChangeInputRating(event.target.value)}
               />
