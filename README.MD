@@ -6,7 +6,13 @@ Docker
 
 ## Como rodar
 
-Primeiro inicie o Docker, e então execute os seguintes comandos, um por um, na raiz do projeto:
+_**Opcional:** como eu ainda não tenho familiaridade com Docker, usei bastante o seguinte comando para zerar todas as imagens e containers que eu criava até finalmente acertar a configuração correta. Cuidado se você já usa Docker e tem imagens e/ou containers de outros projetos, pois serão apagados também._
+
+```
+docker system prune -a -f
+```
+
+Agora sim! Primeiro inicie o Docker, e então execute os seguintes comandos, um por um, na raiz do projeto:
 
 1. ### Banco de dados MySQL
 
