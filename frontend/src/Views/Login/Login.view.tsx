@@ -7,7 +7,7 @@ const View: React.FC = observer(() => {
   const onClickLogin = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    LocalStore.isAuthenticated = true;
+    LocalStore.clientSideLogin(1, "name", "email", 1);
   };
 
   return (
