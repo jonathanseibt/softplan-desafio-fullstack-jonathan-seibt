@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 import { persist } from "mobx-persist";
+import { userInfo } from "os";
 
 class Store {
   @observable hydrated = false;
@@ -7,22 +8,14 @@ class Store {
   @persist("object") @observable user = { id: 0, name: "", email: "", role: 0 };
   @persist @observable isAuthenticated = false;
 
-  clientSideLogin = (id: number, name: string, email: string, role: number) => {
+  clientSideLogin = (user: any) => {
     this.isAuthenticated = true;
-
-    this.user.id = id;
-    this.user.name = name;
-    this.user.email = email;
-    this.user.role = role;
+    this.user = user;
   };
 
   clientSideLogout = () => {
     this.isAuthenticated = false;
-
-    this.user.id = 0;
-    this.user.name = "";
-    this.user.email = "";
-    this.user.role = 0;
+    this.user = { id: 0, name: "", email: "", role: 0 };
   };
 }
 

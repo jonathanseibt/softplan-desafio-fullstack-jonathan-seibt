@@ -4,4 +4,8 @@ export default makeStyles((theme) => ({
   loginButton: {
     marginTop: theme.spacing(2),
   },
+  tip: {
+    textAlign: "center",
+    marginTop: theme.spacing(2),
+  },
 }));

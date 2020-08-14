@@ -84,9 +84,7 @@ const Topbar: React.FC = observer(() => {
           </Typography>
         </Hidden>
 
-        <Tooltip title={getRoleDescription(LocalStore.user?.role)}>
-          <Chip avatar={<Avatar />} label={LocalStore.user?.name} className={styles.chipUsername} />
-        </Tooltip>
+        <Chip avatar={<Avatar />} label={`${getRoleDescription(LocalStore.user?.role)}: ${LocalStore.user?.name}`} className={styles.chipUsername} />
 
         <IconButton color="inherit" onClick={onClickLogout}>
           <PowerSettingsNewOutlinedIcon />
