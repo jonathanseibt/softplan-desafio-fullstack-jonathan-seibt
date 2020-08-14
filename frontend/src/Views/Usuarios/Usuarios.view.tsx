@@ -24,7 +24,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "./Usuarios.styles";
 import Store from "./Usuarios.store";
-import RateReviewOutlinedIcon from "@material-ui/icons/RateReviewOutlined";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const View: React.FC = observer(() => {
   const store = Store;
@@ -59,7 +59,7 @@ const Header: React.FC = observer(() => {
 
       <div>
         <Typography component="h3" variant="body2">
-          Aqui você pode consultar, cadastrar, alterar e excluir os usuários do sistema
+          Aqui você pode consultar, cadastrar, alterar e excluir usuários do sistema
         </Typography>
       </div>
     </>
@@ -96,8 +96,13 @@ const List: React.FC = observer(() => {
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{row.role}</TableCell>
                 <TableCell width="80px" align="center">
-                  <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => store.onClickDeleteRow(row)}>
-                    <RateReviewOutlinedIcon />
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                    onClick={(event: React.MouseEvent) => store.onClickDeleteRow(event, row)}
+                  >
+                    <DeleteOutlinedIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
