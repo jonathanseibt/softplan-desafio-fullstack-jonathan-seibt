@@ -1,18 +1,23 @@
 import { observable } from "mobx";
 
 class Store {
+  @observable data: any[] = [];
   @observable isFormOpen = false;
   @observable inputId = "";
   @observable inputName = "";
   @observable inputEmail = "";
-  @observable inputPassword = "";
   @observable inputRole = "";
 
-  onClickOpenForm = () => {
+  load = () => {
+    this.data.push(1, "Jonathan Seibt", "jonathan@email.com", 1);
+    this.data.push(2, "Alieska Ciliana", "alieska@email.com", 2);
+    this.data.push(3, "Luiz Carlos Seibt", "luiz@email.com", 3);
+  };
+
+  onClickNewForm = () => {
     this.inputId = "";
     this.inputName = "";
     this.inputEmail = "";
-    this.inputPassword = "";
     this.inputRole = "";
 
     this.isFormOpen = true;
@@ -27,21 +32,30 @@ class Store {
   };
 
   onClickSaveForm = () => {
-    this.isFormOpen = false;
+    try {
+      this.data.push(this.inputId, this.inputName, this.inputEmail, this.inputRole);
+
+      this.isFormOpen = false;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   onClickRow = (row: any) => {
     this.inputId = row.name;
     this.inputName = row.name;
     this.inputEmail = row.name;
-    this.inputPassword = row.name;
     this.inputRole = row.name;
 
     this.isFormOpen = true;
   };
 
   onClickDeleteRow = (row: any) => {
-    // this.isFormOpen = true;
+    try {
+      this.data.filter((each) => each.id !== row.id);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   onChangeInputId = (value: string) => {
@@ -54,10 +68,6 @@ class Store {
 
   onChangeInputEmail = (value: string) => {
     this.inputEmail = value;
-  };
-
-  onChangeInputPassword = (value: string) => {
-    this.inputPassword = value;
   };
 
   onChangeInputRole = (value: string) => {
