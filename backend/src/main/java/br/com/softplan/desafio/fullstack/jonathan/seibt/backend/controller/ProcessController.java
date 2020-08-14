@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.com.softplan.desafio.fullstack.jonathan.seibt.backend.entity.Process;
 import br.com.softplan.desafio.fullstack.jonathan.seibt.backend.repository.ProcessRepository;
@@ -22,11 +23,13 @@ public class ProcessController {
     @Autowired
     private ProcessRepository _processRepository;
 
+    @CrossOrigin
     @RequestMapping(value = "/process", method = RequestMethod.GET)
     public List<Process> Get() {
         return _processRepository.findAll();
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/process/{id}", method = RequestMethod.GET)
     public ResponseEntity<Process> GetById(@PathVariable(value = "id") long id)
     {
@@ -39,12 +42,14 @@ public class ProcessController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/process", method =  RequestMethod.POST)
     public Process Post(@Valid @RequestBody Process process)
     {
         return _processRepository.save(process);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/process/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Process> Put(@PathVariable(value = "id") long id, @Valid @RequestBody Process newProcess)
     {
@@ -65,6 +70,7 @@ public class ProcessController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/process/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id)
     {
@@ -79,6 +85,7 @@ public class ProcessController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/process/FindAllByUser/{user}", method = RequestMethod.GET)
     public List<Process> FindAllByUser(@PathVariable(value = "user") long user)
     {
