@@ -52,8 +52,8 @@ public class UserController {
 
         if (oldUser.isPresent()) {
             User user = oldUser.get();
+            user.setName(newUser.getName());
             user.setEmail(newUser.getEmail());
-            user.setPassword(newUser.getPassword());
             user.setRole(newUser.getRole());
 
             _userRepository.save(user);
@@ -78,4 +78,21 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/user/FindFirstByEmail/{email}", method = RequestMethod.GET)
+    public ResponseEntity<User> FindFirstByEmail(@PathVariable(value = "email") String email)
+    {
+        List<User> users = _userRepository.findFirstByEmail(email);
+
+        if (users != null && !users.isEmpty()) {
+            return new ResponseEntity<User>(users.get(0), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/user/FindAllByRole/{role}", method = RequestMethod.GET)
+    public List<User> FindAllByRole(@PathVariable(value = "role") long role)
+    {
+        return _userRepository.findAllByRole(role);
+    }
 }
