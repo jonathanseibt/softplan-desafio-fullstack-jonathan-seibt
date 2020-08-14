@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
   },
   title: {
-    align: "center",
+    textAlign: "center",
     marginBottom: theme.spacing(2),
   },
 }));
