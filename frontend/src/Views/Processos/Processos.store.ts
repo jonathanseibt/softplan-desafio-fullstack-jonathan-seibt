@@ -1,6 +1,8 @@
 import { observable, action } from "mobx";
 import { withSnackbar } from "notistack";
 import LocalStore from "../../Local.store";
+import axios, { AxiosResponse } from "axios";
+import { Constants } from "../../Utils";
 
 class Store {
   @observable data: any[] = [];
@@ -12,12 +14,19 @@ class Store {
   @observable inputRating = "";
 
   @action
-  load = () => {
-    this.data = [];
+  load = async () => {
+    try {
+      this.data = [];
 
-    this.data.push({ id: 1, title: "Processo Teste", description: "Tal tal tal...", user: 3, rating: "Muito bom" });
-    this.data.push({ id: 2, title: "Antigo Processo Quatro", description: "Tal tal tal...", user: 3, rating: "" });
-    this.data.push({ id: 3, title: "Novo Processo", description: "Tal tal tal...", user: 3, rating: "" });
+      const url = `${Constants.URL_API}${LocalStore.user.role === 2 ? "/process" : `/process/FindAllByUser/${LocalStore.user.id}`}`;
+      const result = await axios.get(url);
+      for (const row of result.data) row.user = row.user.id;
+
+      this.data = result.data;
+    } catch (e) {
+      window.alert("Não foi possível carregar os processos!");
+      console.error(e);
+    }
   };
 
   @action
@@ -61,10 +70,27 @@ class Store {
   };
 
   @action
-  onClickSaveForm = () => {
+  onClickSaveForm = async () => {
     try {
       if (this.validateForm()) {
-        this.data.push({ id: this.inputId, title: this.inputTitle, description: this.inputDescription, user: this.inputUser, rating: this.inputRating });
+        const result = await axios.get(`${Constants.URL_API}/user/${this.inputUser}`);
+
+        const process = {
+          title: this.inputTitle,
+          description: this.inputDescription,
+          user: result.data,
+          rating: this.inputRating,
+        };
+
+        if (!this.inputId) {
+          await axios.post(`${Constants.URL_API}/process`, process);
+        } else {
+          await axios.put(`${Constants.URL_API}/process/${this.inputId}`, process);
+        }
+
+        window.alert("Processo salvo com sucesso!");
+
+        await this.load();
 
         this.isFormOpen = false;
       }
@@ -79,7 +105,7 @@ class Store {
     this.inputId = row.id;
     this.inputTitle = row.title;
     this.inputDescription = row.description;
-    this.inputUser = row.user;
+    this.inputUser = row.user.id;
     this.inputRating = row.rating;
 
     this.isFormOpen = true;
