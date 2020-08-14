@@ -9,7 +9,7 @@ const View: React.FC = observer(() => {
 
   return (
     <div className={styles.container}>
-      <Typography component="h2" variant="h1">
+      <Typography component="h2" variant="h4">
         Olá,
       </Typography>
 

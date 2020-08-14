@@ -1,6 +1,21 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { AppBar, IconButton, Typography, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, Tooltip, Chip, Avatar } from "@material-ui/core";
+import {
+  AppBar,
+  IconButton,
+  Typography,
+  Toolbar,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  Chip,
+  Avatar,
+  Hidden,
+} from "@material-ui/core";
 import clsx from "clsx";
 import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
@@ -61,9 +76,11 @@ const Topbar: React.FC = observer(() => {
           <MenuOutlinedIcon />
         </IconButton>
 
-        <Typography component="h1" variant="h6" color="inherit" noWrap className={styles.title}>
-          Dashboard
-        </Typography>
+        <Hidden xsDown>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={styles.title}>
+            Dashboard
+          </Typography>
+        </Hidden>
 
         <Tooltip title={getRoleDescription(LocalStore.userRole)}>
           <Chip avatar={<Avatar />} label={LocalStore.userName} className={styles.chipUsername} />
