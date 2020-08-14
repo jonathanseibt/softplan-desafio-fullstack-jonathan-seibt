@@ -51,3 +51,9 @@ cd frontend && docker build -t react-image-softplan-desafio-fullstack-jonathan-s
 ```
 docker run -d -v "/$(pwd)/frontend:/home/react-softplan-desafio-fullstack-jonathan-seibt" -p 80:80 --rm --name react-container-softplan-desafio-fullstack-jonathan-seibt react-image-softplan-desafio-fullstack-jonathan-seibt
 ```
+
+4. ### Restaurar o banco de dados
+
+```
+docker exec -i mysql-container-softplan-desafio-fullstack-jonathan-seibt mysql -uroot -psoftplan < db/restore.sql
+```
