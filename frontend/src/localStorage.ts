@@ -1,11 +1,13 @@
 import { create } from "mobx-persist";
 import LocalStore from "./Local.store";
 
-const hydrate = create();
+const hydrate = create({});
 
 class LocalStorage {
   constructor() {
-    return Promise.all([hydrate("Store", LocalStore)]);
+    LocalStore.hydrated = false;
+
+    return Promise.all([hydrate("Store", LocalStore)]).then(() => (LocalStore.hydrated = true));
   }
 }
 
