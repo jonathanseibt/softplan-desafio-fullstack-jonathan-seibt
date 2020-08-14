@@ -120,25 +120,29 @@ const Sidebar: React.FC = observer(() => {
           </ListItem>
         </Link>
 
-        <Link to="/usuarios">
-          <ListItem button className={styles.menuItem}>
-            <ListItemIcon>
-              <PeopleOutlinedIcon />
-            </ListItemIcon>
+        {LocalStore.user.role === 1 && (
+          <Link to="/usuarios">
+            <ListItem button className={styles.menuItem}>
+              <ListItemIcon>
+                <PeopleOutlinedIcon />
+              </ListItemIcon>
 
-            <ListItemText primary="Usuários" />
-          </ListItem>
-        </Link>
+              <ListItemText primary="Usuários" />
+            </ListItem>
+          </Link>
+        )}
 
-        <Link to="/processos">
-          <ListItem button className={styles.menuItem}>
-            <ListItemIcon>
-              <DescriptionOutlinedIcon />
-            </ListItemIcon>
+        {(LocalStore.user.role === 2 || LocalStore.user.role === 3) && (
+          <Link to="/processos">
+            <ListItem button className={styles.menuItem}>
+              <ListItemIcon>
+                <DescriptionOutlinedIcon />
+              </ListItemIcon>
 
-            <ListItemText primary="Processos" />
-          </ListItem>
-        </Link>
+              <ListItemText primary="Processos" />
+            </ListItem>
+          </Link>
+        )}
       </List>
     </Drawer>
   );
