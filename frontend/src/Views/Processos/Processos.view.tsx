@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "./Processos.styles";
 import Store from "./Processos.store";
+import LocalStore from "../../Local.store";
 
 const View: React.FC = observer(() => {
   const store = Store;
@@ -43,6 +44,17 @@ const Header: React.FC = observer(() => {
   const store = Store;
   const styles = useStyles();
 
+  const getSubtitleByRole = (role: number) => {
+    switch (role) {
+      case 2:
+        return "Aqui você pode consultar, cadastrar e alterar processos no sistema. Mas cuidado, não é possível remover processos após cadastrados!";
+      case 3:
+        return "Aqui você pode consultar e finalizar os processos designados para você";
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <div className={styles.title}>
@@ -50,14 +62,16 @@ const Header: React.FC = observer(() => {
           Processos
         </Typography>
 
-        <Button variant="contained" color="primary" onClick={store.onClickNewForm}>
-          Novo
-        </Button>
+        {LocalStore.user.role === 2 && (
+          <Button variant="contained" color="primary" onClick={store.onClickNewForm}>
+            Novo
+          </Button>
+        )}
       </div>
 
       <div>
         <Typography component="h3" variant="body2">
-          Aqui você pode consultar, cadastrar e alterar processos no sistema
+          {getSubtitleByRole(LocalStore.user.role)}
         </Typography>
       </div>
     </>
@@ -79,7 +93,7 @@ const List: React.FC = observer(() => {
               </TableCell>
               <TableCell align="left">Título</TableCell>
               <TableCell align="left">Descrição</TableCell>
-              <TableCell align="left">Finalizador</TableCell>
+              {LocalStore.user.role === 2 && <TableCell align="left">Finalizador</TableCell>}
             </TableRow>
           </TableHead>
 
@@ -91,7 +105,7 @@ const List: React.FC = observer(() => {
                 </TableCell>
                 <TableCell align="left">{row.title}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
-                <TableCell align="left">{row.user}</TableCell>
+                {LocalStore.user.role === 2 && <TableCell align="left">{row.user}</TableCell>}
               </TableRow>
             ))}
           </TableBody>
@@ -106,7 +120,7 @@ const Form: React.FC = observer(() => {
 
   return (
     <Dialog open={store.isFormOpen} onClose={store.onClickCloseForm} scroll="paper">
-      <DialogTitle>Processo</DialogTitle>
+      <DialogTitle>Parecer do Processo</DialogTitle>
 
       <DialogContent dividers>
         <Grid container spacing={2}>
@@ -132,6 +146,7 @@ const Form: React.FC = observer(() => {
               autoFocus
               value={store.inputTitle}
               onChange={(event) => store.onChangeInputTitle(event.target.value)}
+              disabled={LocalStore.user.role === 3}
             />
           </Grid>
         </Grid>
@@ -146,27 +161,46 @@ const Form: React.FC = observer(() => {
               label="Descrição"
               value={store.inputDescription}
               onChange={(event) => store.onChangeInputDescription(event.target.value)}
+              disabled={LocalStore.user.role === 3}
             />
           </Grid>
         </Grid>
 
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FormControl variant="outlined" margin="normal" required fullWidth>
-              <InputLabel id="select-label-finalizador">Finalizador</InputLabel>
-              <Select
-                labelId="select-label-finalizador"
-                label="Finalizador"
-                value={store.inputUser}
-                onChange={(event) => store.onChangeInputUser(String(event.target.value))}
-              >
-                <MenuItem value={1}>Administrador</MenuItem>
-                <MenuItem value={2}>Triador</MenuItem>
-                <MenuItem value={3}>Finalizador</MenuItem>
-              </Select>
-            </FormControl>
+        {LocalStore.user.role === 2 && (
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" margin="normal" required fullWidth>
+                <InputLabel id="select-label-finalizador">Finalizador</InputLabel>
+                <Select
+                  labelId="select-label-finalizador"
+                  label="Finalizador"
+                  value={store.inputUser}
+                  onChange={(event) => store.onChangeInputUser(String(event.target.value))}
+                >
+                  <MenuItem value={1}>Administrador</MenuItem>
+                  <MenuItem value={2}>Triador</MenuItem>
+                  <MenuItem value={3}>Finalizador</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
+
+        {LocalStore.user.role === 3 && (
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Parecer"
+                value={store.inputRating}
+                onChange={(event) => store.onChangeInputRating(event.target.value)}
+              />
+            </Grid>
+          </Grid>
+        )}
       </DialogContent>
 
       <DialogActions>

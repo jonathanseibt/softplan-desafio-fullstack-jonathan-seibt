@@ -1,5 +1,6 @@
 import { observable, action } from "mobx";
 import { withSnackbar } from "notistack";
+import LocalStore from "../../Local.store";
 
 class Store {
   @observable data: any[] = [];
@@ -8,14 +9,15 @@ class Store {
   @observable inputTitle = "";
   @observable inputDescription = "";
   @observable inputUser = "";
+  @observable inputRating = "";
 
   @action
   load = () => {
     this.data = [];
 
-    this.data.push({ id: 1, title: "Processo Teste", description: "Tal tal tal...", user: 3 });
-    this.data.push({ id: 2, title: "Antigo Processo Quatro", description: "Tal tal tal...", user: 3 });
-    this.data.push({ id: 3, title: "Novo Processo", description: "Tal tal tal...", user: 3 });
+    this.data.push({ id: 1, title: "Processo Teste", description: "Tal tal tal...", user: 3, rating: "Muito bom" });
+    this.data.push({ id: 2, title: "Antigo Processo Quatro", description: "Tal tal tal...", user: 3, rating: "" });
+    this.data.push({ id: 3, title: "Novo Processo", description: "Tal tal tal...", user: 3, rating: "" });
   };
 
   @action
@@ -24,6 +26,7 @@ class Store {
     this.inputTitle = "";
     this.inputDescription = "";
     this.inputUser = "";
+    this.inputRating = "";
 
     this.isFormOpen = true;
   };
@@ -40,10 +43,18 @@ class Store {
 
   @action
   validateForm = () => {
-    if (!this.inputTitle || !this.inputDescription || !this.inputUser) {
-      window.alert("Preencha todos os campos!");
+    if (LocalStore.user.role === 2) {
+      if (!this.inputTitle || !this.inputDescription || !this.inputUser) {
+        window.alert("Preencha todos os campos!");
 
-      return false;
+        return false;
+      }
+    } else {
+      if (!this.inputRating) {
+        window.alert("Preencha todos os campos!");
+
+        return false;
+      }
     }
 
     return true;
@@ -53,7 +64,7 @@ class Store {
   onClickSaveForm = () => {
     try {
       if (this.validateForm()) {
-        this.data.push({ id: this.inputId, title: this.inputTitle, description: this.inputDescription, user: this.inputUser });
+        this.data.push({ id: this.inputId, title: this.inputTitle, description: this.inputDescription, user: this.inputUser, rating: this.inputRating });
 
         this.isFormOpen = false;
       }
@@ -69,6 +80,7 @@ class Store {
     this.inputTitle = row.title;
     this.inputDescription = row.description;
     this.inputUser = row.user;
+    this.inputRating = row.rating;
 
     this.isFormOpen = true;
   };
@@ -91,6 +103,11 @@ class Store {
   @action
   onChangeInputUser = (value: string) => {
     this.inputUser = value;
+  };
+
+  @action
+  onChangeInputRating = (value: string) => {
+    this.inputRating = value;
   };
 }
 
