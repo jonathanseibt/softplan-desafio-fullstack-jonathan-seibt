@@ -24,6 +24,7 @@ import {
 import useStyles from "./Processos.styles";
 import Store from "./Processos.store";
 import LocalStore from "../../Local.store";
+import { Constants } from "../../Utils";
 
 const View: React.FC = observer(() => {
   const store = Store;
@@ -46,9 +47,9 @@ const Header: React.FC = observer(() => {
 
   const getSubtitleByRole = (role: number) => {
     switch (role) {
-      case 2:
+      case Constants.ROLE.TRIADOR:
         return "Aqui você pode consultar, cadastrar e alterar processos no sistema. Mas cuidado, não é possível remover processos após cadastrados!";
-      case 3:
+      case Constants.ROLE.FINALIZADOR:
         return "Aqui você pode consultar e finalizar os processos designados para você";
       default:
         return "";
@@ -62,7 +63,7 @@ const Header: React.FC = observer(() => {
           Processos
         </Typography>
 
-        {LocalStore.user.role === 2 && (
+        {LocalStore.user.role === Constants.ROLE.TRIADOR && (
           <Button variant="contained" color="primary" onClick={store.onClickNewForm}>
             Novo
           </Button>
@@ -93,7 +94,7 @@ const List: React.FC = observer(() => {
               </TableCell>
               <TableCell align="left">Título</TableCell>
               <TableCell align="left">Descrição</TableCell>
-              {LocalStore.user.role === 2 && <TableCell align="left">Finalizador</TableCell>}
+              {LocalStore.user.role === Constants.ROLE.TRIADOR && <TableCell align="left">Finalizador</TableCell>}
             </TableRow>
           </TableHead>
 
@@ -105,7 +106,7 @@ const List: React.FC = observer(() => {
                 </TableCell>
                 <TableCell align="left">{row.title}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
-                {LocalStore.user.role === 2 && <TableCell align="left">{row.user}</TableCell>}
+                {LocalStore.user.role === Constants.ROLE.TRIADOR && <TableCell align="left">{row.user}</TableCell>}
               </TableRow>
             ))}
           </TableBody>
@@ -146,7 +147,7 @@ const Form: React.FC = observer(() => {
               autoFocus
               value={store.inputTitle}
               onChange={(event) => store.onChangeInputTitle(event.target.value)}
-              disabled={LocalStore.user.role === 3}
+              disabled={LocalStore.user.role === Constants.ROLE.FINALIZADOR}
             />
           </Grid>
         </Grid>
@@ -161,32 +162,34 @@ const Form: React.FC = observer(() => {
               label="Descrição"
               value={store.inputDescription}
               onChange={(event) => store.onChangeInputDescription(event.target.value)}
-              disabled={LocalStore.user.role === 3}
+              disabled={LocalStore.user.role === Constants.ROLE.FINALIZADOR}
             />
           </Grid>
         </Grid>
 
-        {LocalStore.user.role === 2 && (
+        {LocalStore.user.role === Constants.ROLE.TRIADOR && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl variant="outlined" margin="normal" required fullWidth>
-                <InputLabel id="select-label-finalizador">Finalizador</InputLabel>
+                <InputLabel id="select-label-finalizador">Quem dará o parecer</InputLabel>
                 <Select
                   labelId="select-label-finalizador"
-                  label="Finalizador"
+                  label="Quem dará o parecer"
                   value={store.inputUser}
                   onChange={(event) => store.onChangeInputUser(String(event.target.value))}
                 >
-                  <MenuItem value={1}>Administrador</MenuItem>
-                  <MenuItem value={2}>Triador</MenuItem>
-                  <MenuItem value={3}>Finalizador</MenuItem>
+                  {store.listaUsuariosFinalizadores.map((row, index: number) => (
+                    <MenuItem key={index} value={row.id}>
+                      {row.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
           </Grid>
         )}
 
-        {LocalStore.user.role === 3 && (
+        {LocalStore.user.role === Constants.ROLE.FINALIZADOR && (
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField

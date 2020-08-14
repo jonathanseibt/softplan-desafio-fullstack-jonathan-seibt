@@ -25,6 +25,7 @@ import {
 import useStyles from "./Usuarios.styles";
 import Store from "./Usuarios.store";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import { Constants } from "../../Utils";
 
 const View: React.FC = observer(() => {
   const store = Store;
@@ -94,7 +95,7 @@ const List: React.FC = observer(() => {
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.role}</TableCell>
+                <TableCell align="left">{Constants.getRoleDescription(row.role)}</TableCell>
                 <TableCell width="80px" align="center">
                   <IconButton
                     color="primary"
@@ -173,9 +174,9 @@ const Form: React.FC = observer(() => {
                 value={store.inputRole}
                 onChange={(event) => store.onChangeInputRole(String(event.target.value))}
               >
-                <MenuItem value={1}>Administrador</MenuItem>
-                <MenuItem value={2}>Triador</MenuItem>
-                <MenuItem value={3}>Finalizador</MenuItem>
+                <MenuItem value={Constants.ROLE.ADMINISTRADOR}>{Constants.getRoleDescription(Constants.ROLE.ADMINISTRADOR)}</MenuItem>
+                <MenuItem value={Constants.ROLE.TRIADOR}>{Constants.getRoleDescription(Constants.ROLE.TRIADOR)}</MenuItem>
+                <MenuItem value={Constants.ROLE.FINALIZADOR}>{Constants.getRoleDescription(Constants.ROLE.FINALIZADOR)}</MenuItem>
               </Select>
             </FormControl>
           </Grid>

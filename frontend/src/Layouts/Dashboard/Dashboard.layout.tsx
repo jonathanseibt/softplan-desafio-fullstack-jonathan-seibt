@@ -27,6 +27,7 @@ import Store from "./Dashboard.store";
 import useStyles from "./Dashboard.styles";
 import LocalStore from "../../Local.store";
 import { useHistory, Link } from "react-router-dom";
+import { Constants } from "../../Utils";
 
 const Layout: React.FC = observer((_props) => {
   const styles = useStyles();
@@ -53,19 +54,6 @@ const Topbar: React.FC = observer(() => {
     if (history) history.push("/login");
   };
 
-  const getRoleDescription = (role: number) => {
-    switch (role) {
-      case 1:
-        return "Administrador";
-      case 2:
-        return "Triador";
-      case 3:
-        return "Finalizador";
-      default:
-        return "";
-    }
-  };
-
   return (
     <AppBar className={clsx(styles.appBar, Store.isSidebarOpen && styles.appBarShift)}>
       <Toolbar className={styles.toolbar}>
@@ -84,7 +72,7 @@ const Topbar: React.FC = observer(() => {
           </Typography>
         </Hidden>
 
-        <Chip avatar={<Avatar />} label={`${getRoleDescription(LocalStore.user?.role)}: ${LocalStore.user?.name}`} className={styles.chipUsername} />
+        <Chip avatar={<Avatar />} label={`${Constants.getRoleDescription(LocalStore.user?.role)}: ${LocalStore.user?.name}`} className={styles.chipUsername} />
 
         <IconButton color="inherit" onClick={onClickLogout}>
           <PowerSettingsNewOutlinedIcon />
@@ -118,7 +106,7 @@ const Sidebar: React.FC = observer(() => {
           </ListItem>
         </Link>
 
-        {LocalStore.user.role === 1 && (
+        {LocalStore.user.role === Constants.ROLE.ADMINISTRADOR && (
           <Link to="/usuarios">
             <ListItem button className={styles.menuItem}>
               <ListItemIcon>
@@ -130,7 +118,7 @@ const Sidebar: React.FC = observer(() => {
           </Link>
         )}
 
-        {(LocalStore.user.role === 2 || LocalStore.user.role === 3) && (
+        {(LocalStore.user.role === Constants.ROLE.TRIADOR || LocalStore.user.role === Constants.ROLE.FINALIZADOR) && (
           <Link to="/processos">
             <ListItem button className={styles.menuItem}>
               <ListItemIcon>
