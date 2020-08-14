@@ -19,9 +19,9 @@ const View: React.FC = observer(() => {
 
   return (
     <>
-      <TextField variant="outlined" margin="normal" required fullWidth label="Email" name="email" autoComplete="email" autoFocus />
+      <TextField variant="outlined" margin="normal" required fullWidth label="Email" autoComplete="email" autoFocus />
 
-      <TextField variant="outlined" margin="normal" required fullWidth label="Senha" name="senha" autoComplete="current-password" type="password" />
+      <TextField variant="outlined" margin="normal" required fullWidth label="Senha" autoComplete="current-password" type="password" />
 
       <Button type="submit" fullWidth variant="contained" color="primary" onClick={onClickLogin} className={styles.loginButton}>
         Login
