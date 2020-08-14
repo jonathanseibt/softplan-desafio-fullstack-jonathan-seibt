@@ -56,12 +56,11 @@ const Topbar: React.FC = observer(() => {
   };
 
   return (
-    <AppBar position="absolute" className={clsx(styles.appBar, Store.isSidebarOpen && styles.appBarShift)}>
+    <AppBar className={clsx(styles.appBar, Store.isSidebarOpen && styles.appBarShift)}>
       <Toolbar className={styles.toolbar}>
         <IconButton
           edge="start"
           color="inherit"
-          aria-label="open drawer"
           onClick={Store.onClickOpenSidebar}
           className={clsx(styles.menuButton, Store.isSidebarOpen && styles.menuButtonHidden)}
         >
@@ -73,9 +72,7 @@ const Topbar: React.FC = observer(() => {
         </Typography>
 
         <Tooltip title={getRoleDescription(LocalStore.userRole)}>
-          <Box marginX={2}>
-            <Chip avatar={<Avatar />} label={LocalStore.userName} />
-          </Box>
+          <Chip avatar={<Avatar />} label={LocalStore.userName} className={styles.chipUsername} />
         </Tooltip>
 
         <IconButton color="inherit" onClick={onClickLogout}>

@@ -1,9 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { TextField, Button, Box } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import LocalStore from "../../Local.store";
+import useStyles from "./Login.styles";
 
 const View: React.FC = observer(() => {
+  const styles = useStyles();
+
   const onClickLogin = (event: React.MouseEvent) => {
     event.preventDefault();
 
@@ -16,11 +19,9 @@ const View: React.FC = observer(() => {
 
       <TextField variant="outlined" margin="normal" required fullWidth label="Senha" name="senha" autoComplete="current-password" type="password" />
 
-      <Box marginTop={2}>
-        <Button type="submit" fullWidth variant="contained" color="primary" onClick={onClickLogin}>
-          Login
-        </Button>
-      </Box>
+      <Button type="submit" fullWidth variant="contained" color="primary" onClick={onClickLogin} className={styles.loginButton}>
+        Login
+      </Button>
     </>
   );
 });

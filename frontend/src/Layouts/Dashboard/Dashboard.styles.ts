@@ -18,6 +18,7 @@ export default makeStyles((theme) => ({
     minHeight: "64px !important",
   },
   appBar: {
+    position: "absolute",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -70,5 +71,8 @@ export default makeStyles((theme) => ({
   },
   menuItem: {
     paddingLeft: "24px",
+  },
+  chipUsername: {
+    marginRight: theme.spacing(2),
   },
 }));
