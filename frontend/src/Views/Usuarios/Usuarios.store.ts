@@ -1,5 +1,6 @@
 import { observable, action } from "mobx";
-import { withSnackbar } from 'notistack';
+import axios from "axios";
+import { Constants } from "../../Utils";
 
 class Store {
   @observable data: any[] = [];
@@ -10,12 +11,17 @@ class Store {
   @observable inputRole = "";
 
   @action
-  load = () => {
-    this.data = [];
+  load = async () => {
+    try {
+      this.data = [];
 
-    this.data.push({ id: 1, name: "Jonathan Seibt", email: "jonathan@email.com", role: 1 });
-    this.data.push({ id: 2, name: "Alieska Ciliana", email: "alieska@email.com", role: 2 });
-    this.data.push({ id: 3, name: "Luiz Carlos Seibt", email: "luiz@email.com", role: 3 });
+      const result = await axios.get(`${Constants.URL_API}/user`);
+
+      this.data = result.data;
+    } catch (e) {
+      window.alert("Não foi possível carregar os processos!");
+      console.error(e);
+    }
   };
 
   @action
@@ -40,9 +46,9 @@ class Store {
 
   @action
   validateForm = () => {
-    if ( !this.inputName || !this.inputEmail || !this.inputRole) {
+    if (!this.inputName || !this.inputEmail || !this.inputRole) {
       window.alert("Preencha todos os campos!");
-       
+
       return false;
     }
 
@@ -50,15 +56,29 @@ class Store {
   };
 
   @action
-  onClickSaveForm = () => {
+  onClickSaveForm = async () => {
     try {
       if (this.validateForm()) {
-        this.data.push({ id: this.inputId, name: this.inputName, email: this.inputEmail, role: this.inputRole });
+        const user = {
+          name: this.inputName,
+          email: this.inputEmail,
+          role: this.inputRole,
+        };
+
+        if (!this.inputId) {
+          await axios.post(`${Constants.URL_API}/user`, user);
+        } else {
+          await axios.put(`${Constants.URL_API}/user/${this.inputId}`, user);
+        }
+
+        window.alert("Usuário salvo com sucesso!");
+
+        await this.load();
 
         this.isFormOpen = false;
       }
     } catch (e) {
-      window.alert('Não foi possível salvar os dados do usuário!');
+      window.alert("Não foi possível salvar os dados do usuário!");
       console.error(e);
     }
   };
@@ -74,15 +94,21 @@ class Store {
   };
 
   @action
-  onClickDeleteRow = (event: React.MouseEvent, row: any) => {
+  onClickDeleteRow = async (event: React.MouseEvent, row: any) => {
     event.stopPropagation();
 
     try {
       if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
-        this.data = this.data.filter((each) => each.id !== row.id);
+        await axios.delete(`${Constants.URL_API}/user/${row.id}`);
+
+        window.alert("Usuário excluído com sucesso!");
+
+        await this.load();
+
+        this.isFormOpen = false;
       }
     } catch (e) {
-      window.alert('Não foi possível excluir o registro do usuário!');
+      window.alert("Não foi possível excluir o registro do usuário!");
       console.error(e);
     }
   };
