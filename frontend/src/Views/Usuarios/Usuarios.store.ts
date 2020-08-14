@@ -19,7 +19,7 @@ class Store {
 
       this.data = result.data;
     } catch (e) {
-      window.alert("Não foi possível carregar os processos!");
+      window.alert("Não foi possível carregar os usuários!");
       console.error(e);
     }
   };
