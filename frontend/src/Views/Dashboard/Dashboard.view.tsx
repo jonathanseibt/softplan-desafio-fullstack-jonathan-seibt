@@ -14,7 +14,7 @@ const View: React.FC = observer(() => {
       </Typography>
 
       <Typography component="h3" variant="h2">
-        {LocalStore.userName}
+        {LocalStore.user.name}
       </Typography>
 
       <Typography component="h4" variant="body2" className={styles.subtitle}>

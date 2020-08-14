@@ -21,9 +21,11 @@ import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined";
 import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
 import ChevronLeftOutlinedIcon from "@material-ui/icons/ChevronLeftOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
 import Store from "./Dashboard.store";
 import useStyles from "./Dashboard.styles";
 import LocalStore from "../../Local.store";
+import { useHistory, Link } from "react-router-dom";
 
 const Layout: React.FC = observer((_props) => {
   const styles = useStyles();
@@ -44,11 +46,14 @@ const Layout: React.FC = observer((_props) => {
 
 const Topbar: React.FC = observer(() => {
   const styles = useStyles();
+  const history = useHistory();
 
   const onClickLogout = (event: React.MouseEvent) => {
     event.preventDefault();
 
     LocalStore.clientSideLogout();
+
+    if (history) history.push("/login");
   };
 
   const getRoleDescription = (role: number) => {
@@ -82,14 +87,12 @@ const Topbar: React.FC = observer(() => {
           </Typography>
         </Hidden>
 
-        <Tooltip title={getRoleDescription(LocalStore.userRole)}>
-          <Chip avatar={<Avatar />} label={LocalStore.userName} className={styles.chipUsername} />
+        <Tooltip title={getRoleDescription(LocalStore.user?.role)}>
+          <Chip avatar={<Avatar />} label={LocalStore.user?.name} className={styles.chipUsername} />
         </Tooltip>
 
         <IconButton color="inherit" onClick={onClickLogout}>
-          <Tooltip title="Sair">
-            <PowerSettingsNewOutlinedIcon />
-          </Tooltip>
+          <PowerSettingsNewOutlinedIcon />
         </IconButton>
       </Toolbar>
     </AppBar>
@@ -110,13 +113,25 @@ const Sidebar: React.FC = observer(() => {
       <Divider />
 
       <List>
-        <ListItem button className={styles.menuItem}>
-          <ListItemIcon>
-            <DashboardOutlinedIcon />
-          </ListItemIcon>
+        <Link to="/dashboard">
+          <ListItem button className={styles.menuItem}>
+            <ListItemIcon>
+              <DashboardOutlinedIcon />
+            </ListItemIcon>
 
-          <ListItemText primary="Dashboard" />
-        </ListItem>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
+
+        <Link to="/usuarios">
+          <ListItem button className={styles.menuItem}>
+            <ListItemIcon>
+              <PeopleOutlinedIcon />
+            </ListItemIcon>
+
+            <ListItemText primary="Usuários" />
+          </ListItem>
+        </Link>
       </List>
     </Drawer>
   );
