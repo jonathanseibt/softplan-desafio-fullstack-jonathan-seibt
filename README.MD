@@ -57,3 +57,12 @@ docker run -d -v "/$(pwd)/frontend:/home/react-softplan-desafio-fullstack-jonath
 ```
 docker exec -i mysql-container-softplan-desafio-fullstack-jonathan-seibt mysql -uroot -psoftplan < db/restore.sql
 ```
+
+## Referências utilizadas
+
+- https://www.percona.com/blog/2019/11/19/installing-mysql-with-docker/
+- https://github.com/programadorabordo/docker-introducao
+- https://mkyong.com/docker/docker-spring-boot-examples/
+- https://www.treinaweb.com.br/blog/criando-uma-api-rest-com-o-spring-boot/
+- https://levelup.gitconnected.com/dockerizing-a-react-application-using-nginx-and-react-router-43154cc8e58c
+- https://github.com/atmosmps/dockerized-react-app
