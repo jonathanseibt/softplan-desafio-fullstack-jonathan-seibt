@@ -42,7 +42,9 @@ const Topbar: React.FC = observer(() => {
 
   const onClickLogout = (event: React.MouseEvent) => {
     event.preventDefault();
+
     LocalStore.isAuthenticated = false;
+    LocalStore.user = null;
   };
 
   return (
