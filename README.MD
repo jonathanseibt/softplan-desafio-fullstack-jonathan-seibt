@@ -1,6 +1,7 @@
 # Desafio Implementador Fullstack
 
 Início em: 10/08/2020 às 12:00
+
 Entregue em: 14/08/2020 às 22:00
 
 ## Introdução
