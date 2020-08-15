@@ -1,8 +1,25 @@
 # Desafio Implementador Fullstack
 
+Início em: 10/08/2020 às 12:00
+Entregue em: 14/08/2020 às 22:00
+
+## Introdução
+
+Devido ao curto tempo disponível que eu tive para o desafio durante essa semana, tive que escolher deixar algumas coisas de fora. O critério que eu usei foi: dar atenção às coisas que eu ainda NÃO sabia, e deixar em segundo plano o que eu JÁ sei. Me dedicar ao que eu já sei não representaria muito aprendizado.
+
+Por exemplo: eu ~~ainda~~ não tenho familiaridade com Spring e Docker. Eu sabia da existência deles e tudo mais, mas nunca havia utilizado na prática. Então resolvi começar por eles. E aprendi muito (eu já sei que Docker vou usar pra sempre). Já React e desenvolvimento web no geral, eu já domino. Então optei por deixar em segundo plano. Até mesmo utilizei Material UI, que vem com praticamente todos os componentes visuais e responsividade prontos, aliados ao design system já validado da Google.
+
+Algo interessante que fiz foi utilizar o VSCode para o desenvolvimento em Java, algo que nunca havia feito. Até então, só utilizava Eclipse. Inclusive, utilizei a ferramenta a extensão Spring Initializr do VSCode para dar start no back-end (HIPER ÚTIL).
+
+Já com relação aos testes automatizados, fiquei dividido. Conheço bem testes automatizados em React e Node. Mas eles de fato tomam mais tempo do que conhecimento em si. E tempo era algo que eu não tinha. Ainda assim, testes automatizados com Spring, eu nunca havia feito. Infelizmente não houve tempo hábil para acrescentar.
+
+Eu utilizei MobX no lugar de Redux, porque o MobX não impõe um arquitetura rígida de implementação, o que faz ele ser muito mais rápido e flexível de usar. O front-end e o back-end se comunicam apenas por meio de APIs. O login é só fictício. E devido ao tempo, deixei a possibilidade de apenas uma pessoa fazer um parecer no processo. Como de costume, procurei deixar o código o mais legível e óbvio possível, dispensando comentários inline. Não houve tempo hábil para fazer uma documentação do sistema.
+
+Ah, deixei no final alguns links das referências que utilizei. 🤜
+
 ## Dependências
 
-Docker
+Docker (no meu caso, o Docker Desktop do Windows)
 
 ## Como rodar
 
@@ -57,6 +74,8 @@ docker run -d -v "/$(pwd)/frontend:/home/react-softplan-desafio-fullstack-jonath
 ```
 docker exec -i mysql-container-softplan-desafio-fullstack-jonathan-seibt mysql -uroot -psoftplan < db/restore.sql
 ```
+
+👏 Feito!
 
 ## Referências utilizadas
 
